@@ -5,9 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import cic25.proyPareja002.grupo8.app.service.TiendaNoExistia;
-import cic25.proyPareja002.grupo8.app.service.TiendaNulaException;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -15,7 +12,6 @@ public class GlobalExceptionHandler {
             SecureNoAllowNewID.class,
             TiendaNulaException.class,
             TiendaNoExistia.class,
-
     })
 
     public ResponseEntity<Object> handleSecureNoAllowNewID(SecureNoAllowNewID e) {

@@ -1,7 +1,6 @@
 package cic25.proyPareja002.grupo8.app.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +21,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cic25.proyPareja002.grupo8.app.model.Tienda;
 import cic25.proyPareja002.grupo8.app.repository.TiendaRepository;
-import cic25.proyPareja002.grupo8.app.service.TiendaNoExistia;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -91,7 +88,7 @@ public class TiendaControllerIntegrationTest {
         tiendaRepository.save(tienda3);
 
         List<Tienda> tiendas = tiendaRepository.findAll();
-        
+
         assertTrue(tiendas.size() > 0);
     }
 
@@ -141,6 +138,4 @@ public class TiendaControllerIntegrationTest {
                     assertEquals("Prueba de cambio de dirección", actualizada.getUbicacion());
                 });
     }
-
-
 }

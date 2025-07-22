@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cic25.proyPareja002.grupo8.app.exeptions.TiendaNulaException;
 import cic25.proyPareja002.grupo8.app.model.Tienda;
-import cic25.proyPareja002.grupo8.app.service.TiendaNulaException;
 import cic25.proyPareja002.grupo8.app.service.TiendaService;
 
 @RestController

@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cic25.proyPareja002.grupo8.app.exeptions.TiendaNoExistia;
+import cic25.proyPareja002.grupo8.app.exeptions.TiendaNulaException;
 import cic25.proyPareja002.grupo8.app.model.Tienda;
 import cic25.proyPareja002.grupo8.app.repository.TiendaRepository;
 
@@ -33,13 +35,6 @@ public class TiendaService {
         }
         return tiendaBuscada;
     }
-
-    // public Tienda get(Long id) throws NullPointerException{
-    // LOGGER.info(String.format("Mostrando la tienda con id %d", id));
-    // Tienda tiendaBuscada = tiendaRepository.findById(id).get();
-
-    // return tiendaBuscada;
-    // }
 
     public Tienda post(Tienda tienda) {
         LOGGER.info(String.format("Actualizando la tienda con id %d", tienda.getId()));

@@ -1,4 +1,4 @@
-package cic25.proyPareja002.grupo8.app.respository;
+package cic25.proyPareja002.grupo8.app.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
