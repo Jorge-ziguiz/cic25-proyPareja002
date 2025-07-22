@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import cic25.proyPareja002.grupo8.app.exeptions.SecureNoAllowNewID;
 import cic25.proyPareja002.grupo8.app.model.Producto;
-import cic25.proyPareja002.grupo8.app.respository.ProductoRepository;
+import cic25.proyPareja002.grupo8.app.repository.ProductoRepository;
 
 @Service
 public class ProductoService {
