@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,13 +34,8 @@ public class TiendaController {
         return tiendaService.get(id);
     }
 
-    // @GetMapping("/{id}")
-    // public Tienda get(Long id) {
-
-    // return tiendaService.get(id);
-    // }
-
-    public Tienda post(Tienda tienda) {
+    @PostMapping()
+    public Tienda post(@RequestBody Tienda tienda) {
         return tiendaService.post(tienda);
     }
 
@@ -46,7 +44,8 @@ public class TiendaController {
         tiendaService.delete(id);
     }
 
-    public Tienda update(Long id, Tienda nuevaTienda) {
+    @PutMapping("{id}")
+    public Tienda update(@PathVariable Long id, @RequestBody Tienda nuevaTienda) {
         // tiendaService.delete(id);
         // return tiendaService.post(nuevaTienda);
         nuevaTienda.setId(id);
