@@ -53,6 +53,9 @@ public class TiendaService {
     }
 
     public Tienda update(Tienda tienda) {
+        if(tiendaRepository.findById(tienda.getId()).isEmpty()){
+            throw new TiendaNoExistia("No se puede actualizar una tienda que no existe");
+        }
         return tiendaRepository.save(tienda);
     }
 }

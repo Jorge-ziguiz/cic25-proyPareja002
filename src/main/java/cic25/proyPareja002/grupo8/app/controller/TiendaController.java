@@ -46,8 +46,6 @@ public class TiendaController {
 
     @PutMapping("{id}")
     public Tienda update(@PathVariable Long id, @RequestBody Tienda nuevaTienda) {
-        // tiendaService.delete(id);
-        // return tiendaService.post(nuevaTienda);
         nuevaTienda.setId(id);
         return tiendaService.update(nuevaTienda);
     }

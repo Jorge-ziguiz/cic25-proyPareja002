@@ -102,4 +102,44 @@ public class TiendaServiceIntegrationTest {
 
         assertEquals(tienda.getNombre(), tiendaResultado.getNombre());
     }
+
+    @Test
+    void testUpdate(){
+        Tienda tienda = new Tienda();
+        tienda.setNombre("Nueva tienda");
+        tienda.setUbicacion("Dirección");
+        Tienda tiendaGuardada = tiendaService.post(tienda);
+
+        assertEquals(tienda.getNombre(), tiendaGuardada.getNombre());
+
+        Tienda tiendaActualizada = new Tienda();
+        tiendaActualizada.setNombre("Tienda con nombre cambiado");
+        tiendaActualizada.setUbicacion("Dirección cambiada");
+        tiendaActualizada.setId(tienda.getId());
+
+        tiendaService.update(tiendaActualizada);
+
+        assertEquals(tiendaGuardada, tiendaActualizada);
+    }
+
+    @Test
+    void testUpdateTiendaNoExistente() throws Exception {
+         Tienda tienda = new Tienda();
+        tienda.setNombre("Nueva tienda");
+        tienda.setUbicacion("Dirección");
+        Tienda tiendaGuardada = tiendaService.post(tienda);
+
+        assertEquals(tienda.getNombre(), tiendaGuardada.getNombre());
+
+        Tienda tiendaActualizada = new Tienda();
+        tiendaActualizada.setNombre("Tienda con nombre cambiado");
+        tiendaActualizada.setUbicacion("Dirección cambiada");
+        tiendaActualizada.setId(tienda.getId());
+
+        tiendaService.delete(tienda.getId());
+
+        assertThrows(TiendaNoExistia.class, ()->{
+            tiendaService.update(tiendaActualizada);
+        });
+    }
 }
