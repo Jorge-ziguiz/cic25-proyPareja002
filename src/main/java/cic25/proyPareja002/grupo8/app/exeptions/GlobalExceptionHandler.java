@@ -10,15 +10,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             SecureNoAllowNewID.class,
-            NoAllowedDeleteIfRegisterNoExist.class
+
     })
 
     public ResponseEntity<Object> handleSecureNoAllowNewID(SecureNoAllowNewID e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
-
-    public ResponseEntity<Object> handleNoAllowedDeleteIfRegisterNoExist(NoAllowedDeleteIfRegisterNoExist e) {
-        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
 }

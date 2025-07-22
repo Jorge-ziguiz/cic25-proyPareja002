@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cic25.proyPareja002.grupo8.app.exeptions.SecureNoAllowNewID;
 import cic25.proyPareja002.grupo8.app.model.Producto;
 import cic25.proyPareja002.grupo8.app.service.ProductoService;
 
@@ -38,9 +39,11 @@ public class ProductoController {
         productoService.delete(Long.valueOf(id));
     }
 
-   
     @PutMapping()
-    public void update(@RequestBody Producto producto)  {
+    public void update(@RequestBody Producto producto) {
+        if (getById(producto.getId()) == null || getById(producto.getId()).getId() == 0) {
+            throw new SecureNoAllowNewID("{\"message\": \"no se pude actualizar un registro que no exsite\"}");
+        }
         productoService.update(producto);
     }
 

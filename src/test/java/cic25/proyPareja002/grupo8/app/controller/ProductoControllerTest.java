@@ -88,35 +88,6 @@ public class ProductoControllerTest {
     }
 
     @Test
-    void testDeleteRegisterNotExist() throws Exception {
-        Producto producto = new Producto();
-        producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
-        producto.setPrecio(2.2);
-
-        String ProductoJson = objectMapper.writeValueAsString(producto);
-
-        String JsonResultadoPost = mockMvc.perform(post("/producto")
-                .contentType("application/json")
-                .content(ProductoJson))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn().getResponse().getContentAsString();
-
-        Producto ProductoResultado = objectMapper.readValue(JsonResultadoPost, Producto.class);
-
-        mockMvc.perform(delete("/producto/" + ProductoResultado.getId()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn().getResponse().getContentAsString();
-
-        mockMvc.perform(delete("/producto/" + ProductoResultado.getId()))
-                .andExpect(status().is4xxClientError())
-                .andDo(print());
-
-    }
-
-    @Test
     void testGetAll() throws Exception {
         Producto producto = new Producto();
         producto.setNombre("Arroz");
