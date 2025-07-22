@@ -1,22 +1,15 @@
 package cic25.proyPareja002.grupo8.app.model;
 
 import jakarta.persistence.Entity;
-<<<<<<< HEAD
-=======
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
->>>>>>> main
 import jakarta.persistence.Id;
 
 @Entity
 public class Producto {
-<<<<<<< HEAD
-    @Id
-    private Long id;
-=======
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String Nombre;
@@ -56,8 +49,6 @@ public class Producto {
     public void setPrecio(double precio) {
         Precio = precio;
     }
-
-
 
     @Override
     public int hashCode() {
@@ -106,7 +97,4 @@ public class Producto {
         return "Producto [id=" + id + ", Nombre=" + Nombre + ", Marca=" + Marca + ", Precio=" + Precio + "]";
     }
 
-    
-    
->>>>>>> main
 }
