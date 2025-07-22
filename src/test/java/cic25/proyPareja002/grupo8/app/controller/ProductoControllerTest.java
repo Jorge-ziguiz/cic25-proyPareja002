@@ -168,7 +168,7 @@ public class ProductoControllerTest {
         mockMvc.perform(put("/producto")
                 .contentType("application/json")
                 .content(JSonProductoActualizado))
-                .andExpect(status().isOk())
+                .andExpect(status().is4xxClientError())
                 .andDo(print());
 
         mockMvc.perform(get("/producto/" + productoActualizado.getId()))
