@@ -3,15 +3,19 @@ package cic25.proyPareja002.grupo8.app.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import cic25.proyPareja002.grupo8.app.exeptions.SecureNoAllowNewID;
 import cic25.proyPareja002.grupo8.app.model.Producto;
 import cic25.proyPareja002.grupo8.app.service.ProductoService;
 
@@ -36,8 +40,10 @@ public class ProductoController {
         productoService.delete(Long.valueOf(id));
     }
 
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(SecureNoAllowNewID.class)
     @PutMapping()
-    public void update(@RequestBody Producto producto) {
+    public void update(@RequestBody Producto producto)  {
         productoService.update(producto);
     }
 

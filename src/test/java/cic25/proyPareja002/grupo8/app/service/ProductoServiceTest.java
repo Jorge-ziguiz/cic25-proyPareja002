@@ -1,6 +1,7 @@
 package cic25.proyPareja002.grupo8.app.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import cic25.proyPareja002.grupo8.app.exeptions.SecureNoAllowNewID;
 import cic25.proyPareja002.grupo8.app.model.Producto;
 
 @SpringBootTest
@@ -80,7 +82,7 @@ public class ProductoServiceTest {
     }
 
     @Test
-    void testUpdate() {
+    void testUpdate()  {
 
         Producto producto = new Producto();
 
@@ -96,4 +98,24 @@ public class ProductoServiceTest {
         assertEquals(2.2, resultadoGetById.getPrecio());
 
     }
+
+    @Test
+    void testUpdateNoRegister() throws SecureNoAllowNewID {
+
+        Producto producto = new Producto();
+
+        producto.setNombre("Arroz");
+        producto.setMarca("Alguna Marca");
+
+        Producto resultadoCreate = productoService.create(producto);
+        productoService.delete(resultadoCreate.getId());
+
+        producto.setPrecio(2.2);
+
+        assertThrows(SecureNoAllowNewID.class, () -> {
+            productoService.update(producto);
+        });
+
+    }
+
 }
