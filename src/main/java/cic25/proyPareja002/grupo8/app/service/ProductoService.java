@@ -30,7 +30,7 @@ public class ProductoService {
 
     public void update(Producto producto) throws SecureNoAllowNewID {
         if (getById(producto.getId()) == null || getById(producto.getId()).getId() == 0) {
-            throw new SecureNoAllowNewID("no se pude actualizar un registro que no exsite");
+            throw new SecureNoAllowNewID("{message: no se pude actualizar un registro que no exsite}");
         }
 
         productoRepository.save(producto);

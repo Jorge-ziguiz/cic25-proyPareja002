@@ -181,4 +181,36 @@ public class ProductoControllerTest {
                 }).andDo(print());
 
     }
+
+    @Test
+    void testUpdateNoRegister() throws Exception {
+
+        Producto producto = new Producto();
+        producto.setNombre("Arroz");
+        producto.setMarca("Alguna Marca");
+        producto.setPrecio(2.2);
+
+        String ProductoJson = objectMapper.writeValueAsString(producto);
+
+        String JsonResultadoPost = mockMvc.perform(post("/producto")
+                .contentType("application/json")
+                .content(ProductoJson))
+                .andExpect(status().isOk())
+                .andDo(print()).andReturn().getResponse().getContentAsString();
+
+        Producto productoActualizado = objectMapper.readValue(JsonResultadoPost, Producto.class);
+        String JSonProductoActualizado = objectMapper.writeValueAsString(productoActualizado);
+
+        mockMvc.perform(delete("/producto/" + productoActualizado.getId()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn().getResponse().getContentAsString();
+
+        mockMvc.perform(put("/producto")
+                .contentType("application/json")
+                .content(JSonProductoActualizado))
+                .andExpect(status().is4xxClientError())
+                .andDo(print());
+    }
+
 }
