@@ -15,15 +15,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import cic25.proyPareja002.grupo8.app.exeptions.TiendaNoExistia;
 import cic25.proyPareja002.grupo8.app.model.Tienda;
 import cic25.proyPareja002.grupo8.app.repository.TiendaRepository;
-import cic25.proyPareja002.grupo8.app.service.TiendaNoExistia;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -91,7 +91,7 @@ public class TiendaControllerIntegrationTest {
         tiendaRepository.save(tienda3);
 
         List<Tienda> tiendas = tiendaRepository.findAll();
-        
+
         assertTrue(tiendas.size() > 0);
     }
 
@@ -142,5 +142,21 @@ public class TiendaControllerIntegrationTest {
                 });
     }
 
+    @Test
+    void testUpdateNotFound() throws Exception {
+        Tienda tienda = new Tienda();
+        Long id = tiendaRepository.save(tienda).getId();
+        tiendaRepository.deleteById(id);
 
+        Tienda tiendaSinId = new Tienda();
+        tiendaSinId.setNombre("Tienda nueva");
+        tiendaSinId.setUbicacion("Calle falsa 123");
+
+        String jsonActualizado = objectMapper.writeValueAsString(tiendaSinId);
+
+        mockMvc.perform(put("/tiendas/" + id)
+                .contentType("application/json")
+                .content(jsonActualizado))
+                .andExpect(status().isNotFound());
+    }
 }

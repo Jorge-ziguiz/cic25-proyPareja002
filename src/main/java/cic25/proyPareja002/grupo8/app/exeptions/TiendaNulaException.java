@@ -1,4 +1,4 @@
-package cic25.proyPareja002.grupo8.app.service;
+package cic25.proyPareja002.grupo8.app.exeptions;
 
 public class TiendaNulaException extends RuntimeException{
     public TiendaNulaException(){

@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cic25.proyPareja002.grupo8.app.exeptions.TiendaNoExistia;
+import cic25.proyPareja002.grupo8.app.exeptions.TiendaNulaException;
 import cic25.proyPareja002.grupo8.app.model.Tienda;
-import cic25.proyPareja002.grupo8.app.service.TiendaNulaException;
 import cic25.proyPareja002.grupo8.app.service.TiendaService;
 
 @RestController
@@ -30,7 +31,6 @@ public class TiendaController {
 
     @GetMapping("/{id}")
     public Optional<Tienda> get(@PathVariable Long id) throws TiendaNulaException {
-        // Optional<Tienda> tiendaBuscada = tiendaService.get(id);
         return tiendaService.get(id);
     }
 
@@ -45,8 +45,8 @@ public class TiendaController {
     }
 
     @PutMapping("{id}")
-    public Tienda update(@PathVariable Long id, @RequestBody Tienda nuevaTienda) {
+    public Tienda update(@PathVariable Long id, @RequestBody Tienda nuevaTienda) throws TiendaNoExistia{
         nuevaTienda.setId(id);
-        return tiendaService.update(nuevaTienda);
+        return tiendaService.update(nuevaTienda.getId(), nuevaTienda);
     }
 }
