@@ -4,6 +4,7 @@ public class TiendaNoExistia extends RuntimeException {
     public TiendaNoExistia() {
     }
 
+    
     public TiendaNoExistia(String mensaje) {
         super(mensaje);
     }

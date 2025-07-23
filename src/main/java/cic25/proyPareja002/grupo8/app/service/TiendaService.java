@@ -47,10 +47,14 @@ public class TiendaService {
         tiendaRepository.deleteById(id);
     }
 
-    public Tienda update(Tienda tienda) {
-        if(tiendaRepository.findById(tienda.getId()).isEmpty()){
-            throw new TiendaNoExistia("No se puede actualizar una tienda que no existe");
+    public Tienda update(Long id, Tienda tienda) throws TiendaNoExistia{
+        if(tiendaRepository.findById(id).isEmpty()){
+            throw new TiendaNoExistia();
         }
+
+        tienda.setId(id);
+
         return tiendaRepository.save(tienda);
     }
 }
+ 

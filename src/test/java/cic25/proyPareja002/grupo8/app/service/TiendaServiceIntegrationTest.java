@@ -106,7 +106,7 @@ public class TiendaServiceIntegrationTest {
     }
 
     @Test
-    void testUpdate(){
+    void testUpdate() {
         Tienda tienda = new Tienda();
         tienda.setNombre("Nueva tienda");
         tienda.setUbicacion("Dirección");
@@ -119,29 +119,38 @@ public class TiendaServiceIntegrationTest {
         tiendaActualizada.setUbicacion("Dirección cambiada");
         tiendaActualizada.setId(tienda.getId());
 
-        tiendaService.update(tiendaActualizada);
+        tiendaService.update(tienda.getId(), tiendaActualizada);
 
         assertEquals(tiendaGuardada, tiendaActualizada);
     }
 
     @Test
     void testUpdateTiendaNoExistente() throws Exception {
-         Tienda tienda = new Tienda();
+        Tienda tienda = new Tienda();
         tienda.setNombre("Nueva tienda");
         tienda.setUbicacion("Dirección");
-        Tienda tiendaGuardada = tiendaService.post(tienda);
+        tiendaService.post(tienda);
 
-        assertEquals(tienda.getNombre(), tiendaGuardada.getNombre());
+        // Guardamos el id de la tienda
+        Long idTienda = tienda.getId();
 
-        Tienda tiendaActualizada = new Tienda();
-        tiendaActualizada.setNombre("Tienda con nombre cambiado");
-        tiendaActualizada.setUbicacion("Dirección cambiada");
-        tiendaActualizada.setId(tienda.getId());
+        // Comprobamos que la tienda se haya guardado correctamente
+        assertEquals("Nueva tienda", tienda.getNombre());
 
-        tiendaService.delete(tienda.getId());
+        // Eliminamos la tienda, para que ya no exista ningún registro con el id de la
+        // misma
+        tiendaService.delete(idTienda);
 
-        assertThrows(TiendaNoExistia.class, ()->{
-            tiendaService.update(tiendaActualizada);
+        // Creamos una nueva tienda, a la cual le vamos a dar el id de la tienda borrada
+        Tienda tienda2 = new Tienda();
+        tienda2.setNombre("Nueva tienda");
+        tienda2.setUbicacion("Dirección");
+        tienda2.setId(idTienda);
+
+        //Al tratar de actualizar con los datos de la nueva tienda, debería dar error, pues en la BD no hay ninguna tienda con ese ID (no sería una actualización)
+        assertThrows(TiendaNoExistia.class, () -> {
+            tiendaService.update(idTienda, tienda2);
         });
     }
 }
+

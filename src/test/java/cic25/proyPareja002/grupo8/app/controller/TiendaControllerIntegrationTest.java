@@ -1,6 +1,7 @@
 package cic25.proyPareja002.grupo8.app.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import cic25.proyPareja002.grupo8.app.exeptions.TiendaNoExistia;
 import cic25.proyPareja002.grupo8.app.model.Tienda;
 import cic25.proyPareja002.grupo8.app.repository.TiendaRepository;
 
@@ -137,5 +140,23 @@ public class TiendaControllerIntegrationTest {
                     assertEquals("Nombre cambiado", actualizada.getNombre());
                     assertEquals("Prueba de cambio de dirección", actualizada.getUbicacion());
                 });
+    }
+
+    @Test
+    void testUpdateNotFound() throws Exception {
+        Tienda tienda = new Tienda();
+        Long id = tiendaRepository.save(tienda).getId();
+        tiendaRepository.deleteById(id);
+
+        Tienda tiendaSinId = new Tienda();
+        tiendaSinId.setNombre("Tienda nueva");
+        tiendaSinId.setUbicacion("Calle falsa 123");
+
+        String jsonActualizado = objectMapper.writeValueAsString(tiendaSinId);
+
+        mockMvc.perform(put("/tiendas/" + id)
+                .contentType("application/json")
+                .content(jsonActualizado))
+                .andExpect(status().isNotFound());
     }
 }
