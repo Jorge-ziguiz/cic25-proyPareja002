@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(SecureNoAllowNewID.class)
-    public ResponseEntity<Object> handleSecureNoAllowNewID(SecureNoAllowNewID e) {
-        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+    public ResponseEntity<String> handleSecureNoAllowNewID(SecureNoAllowNewID e) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("error"+e.getMessage());
+
     }
 
     @ExceptionHandler(TiendaNoExistia.class)
