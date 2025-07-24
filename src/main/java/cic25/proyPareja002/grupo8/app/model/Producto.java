@@ -1,9 +1,11 @@
 package cic25.proyPareja002.grupo8.app.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Producto {
@@ -14,9 +16,10 @@ public class Producto {
 
     private String Nombre;
 
-    private String Marca;
-
     private double Precio;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Marca marca;
 
     public Long getId() {
         return id;
@@ -33,13 +36,13 @@ public class Producto {
     public void setNombre(String nombre) {
         Nombre = nombre;
     }
-
-    public String getMarca() {
-        return Marca;
+    
+    public Marca getMarca() {
+        return marca;
     }
 
-    public void setMarca(String marca) {
-        Marca = marca;
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
     public double getPrecio() {
@@ -56,7 +59,7 @@ public class Producto {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((Nombre == null) ? 0 : Nombre.hashCode());
-        result = prime * result + ((Marca == null) ? 0 : Marca.hashCode());
+        result = prime * result + ((marca == null) ? 0 : marca.hashCode());
         long temp;
         temp = Double.doubleToLongBits(Precio);
         result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -82,10 +85,10 @@ public class Producto {
                 return false;
         } else if (!Nombre.equals(other.Nombre))
             return false;
-        if (Marca == null) {
-            if (other.Marca != null)
+        if (marca == null) {
+            if (other.marca != null)
                 return false;
-        } else if (!Marca.equals(other.Marca))
+        } else if (!marca.equals(other.marca))
             return false;
         if (Double.doubleToLongBits(Precio) != Double.doubleToLongBits(other.Precio))
             return false;
@@ -94,7 +97,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto [id=" + id + ", Nombre=" + Nombre + ", Marca=" + Marca + ", Precio=" + Precio + "]";
+        return "Producto [id=" + id + ", Nombre=" + Nombre + ", Marca=" + marca + ", Precio=" + Precio + "]";
     }
 
 }

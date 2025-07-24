@@ -23,7 +23,7 @@ public class ProductoServiceTest {
         Producto producto = new Producto();
 
         producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
+        // producto.setMarca("Alguna Marca");
         producto.setPrecio(2.2);
 
         Producto resultadoCreate = productoService.create(producto);
@@ -36,7 +36,7 @@ public class ProductoServiceTest {
         Producto producto = new Producto();
 
         producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
+        // producto.setMarca("Alguna Marca");
         producto.setPrecio(2.2);
 
         Producto resultadoCreate = productoService.create(producto);
@@ -53,7 +53,7 @@ public class ProductoServiceTest {
         Producto producto = new Producto();
 
         producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
+        // producto.setMarca("Alguna Marca");
         producto.setPrecio(2.2);
 
         productoService.create(producto);
@@ -70,7 +70,7 @@ public class ProductoServiceTest {
         Producto producto = new Producto();
 
         producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
+        // producto.setMarca("Alguna Marca");
         producto.setPrecio(2.2);
 
         Producto resultadoCreate = productoService.create(producto);
@@ -85,7 +85,7 @@ public class ProductoServiceTest {
         Producto producto = new Producto();
 
         producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
+        // producto.setMarca("Alguna Marca");
 
         Producto resultadoCreate = productoService.create(producto);
 

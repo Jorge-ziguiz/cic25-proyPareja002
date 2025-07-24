@@ -7,11 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cic25.proyPareja002.grupo8.app.model.Producto;
 import cic25.proyPareja002.grupo8.app.repository.ProductoRepository;
 
 @Service
+@Transactional
 public class ProductoService {
 
     @Autowired
@@ -31,6 +33,7 @@ public class ProductoService {
         productoRepository.save(producto);
     }
 
+    @Transactional(readOnly = true)
     public Producto getById(Long id) {
         Optional<Producto> resultado = productoRepository.findById(id);
         return resultado.orElse(null);

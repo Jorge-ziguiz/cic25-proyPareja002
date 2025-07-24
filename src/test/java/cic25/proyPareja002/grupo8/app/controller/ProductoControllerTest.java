@@ -36,7 +36,7 @@ public class ProductoControllerTest {
         void testCreate() throws Exception {
                 Producto producto = new Producto();
                 producto.setNombre("Arroz");
-                producto.setMarca("Alguna Marca");
+                // Sproducto.setMarca("Alguna Marca");
                 producto.setPrecio(2.2);
 
                 String ProductoJson = objectMapper.writeValueAsString(producto);
@@ -60,7 +60,7 @@ public class ProductoControllerTest {
                 Producto producto = new Producto();
                 producto.setId(Long.valueOf(1));
                 producto.setNombre("Arroz");
-                producto.setMarca("Alguna Marca");
+                // producto.setMarca("Alguna Marca");
                 producto.setPrecio(2.2);
 
                 String ProductoJson = objectMapper.writeValueAsString(producto);
@@ -77,7 +77,7 @@ public class ProductoControllerTest {
         void testDelete() throws Exception {
                 Producto producto = new Producto();
                 producto.setNombre("Arroz");
-                producto.setMarca("Alguna Marca");
+                // producto.setMarca("Alguna Marca");
                 producto.setPrecio(2.2);
 
                 String ProductoJson = objectMapper.writeValueAsString(producto);
@@ -110,7 +110,7 @@ public class ProductoControllerTest {
         void testGetAll() throws Exception {
                 Producto producto = new Producto();
                 producto.setNombre("Arroz");
-                producto.setMarca("Alguna Marca");
+                // producto.setMarca("Alguna Marca");
                 producto.setPrecio(2.2);
 
                 String ProductoJson = objectMapper.writeValueAsString(producto);
@@ -140,7 +140,7 @@ public class ProductoControllerTest {
 
                 Producto producto = new Producto();
                 producto.setNombre("Arroz");
-                producto.setMarca("Alguna Marca");
+                // producto.setMarca("Alguna Marca");
                 producto.setPrecio(2.2);
 
                 String ProductoJson = objectMapper.writeValueAsString(producto);
@@ -171,7 +171,7 @@ public class ProductoControllerTest {
 
                 Producto producto = new Producto();
                 producto.setNombre("Arroz");
-                producto.setMarca("Alguna Marca");
+                // producto.setMarca("Alguna Marca");
 
                 String ProductoJson = objectMapper.writeValueAsString(producto);
 
@@ -208,7 +208,7 @@ public class ProductoControllerTest {
 
                 Producto producto = new Producto();
                 producto.setNombre("Arroz");
-                producto.setMarca("Alguna Marca");
+                // producto.setMarca("Alguna Marca");
                 producto.setPrecio(2.2);
 
                 String ProductoJson = objectMapper.writeValueAsString(producto);
