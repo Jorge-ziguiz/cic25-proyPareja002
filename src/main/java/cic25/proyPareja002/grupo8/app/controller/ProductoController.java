@@ -32,33 +32,20 @@ public class ProductoController {
 
     @PostMapping()
     public Producto create(@RequestBody Producto producto) {
-        try {
-            if (producto.getId() != null && producto.getId() != 0) {
 
-                throw new SecureNoAllowNewID("no se puede crear un producto con ID");
-            }
-            producto.setMarca(null);
-            return productoService.create(producto);
-
-        } catch (SecureNoAllowNewID e) {
-            LOGGER.error("no se puede crear un producto con ID", e);
-            return null;
+        if (producto.getId() != null && producto.getId() != 0) {
+            throw new SecureNoAllowNewID("no se puede crear un producto con ID");
         }
-
+        producto.setMarca(null);
+        return productoService.create(producto);
     }
 
     @PostMapping("provedor")
     public Producto productoProvedor(@RequestBody Producto producto) {
-        try {
-            if (producto.getId() != null && producto.getId() != 0) {
-                throw new SecureNoAllowNewID("no se puede crear un producto con ID");
-            }
-            return productoService.create(producto);
-        } catch (SecureNoAllowNewID e) {
-            LOGGER.error("no se puede crear un producto con ID", e);
-            return null;
+        if (producto.getId() != null && producto.getId() != 0) {
+            throw new SecureNoAllowNewID("no se puede crear un producto con ID");
         }
-
+        return productoService.create(producto);
     }
 
     @DeleteMapping("/{id}")
