@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cic25.proyPareja002.grupo8.app.exeptions.SecureNoAllowNewID;
 import cic25.proyPareja002.grupo8.app.model.Producto;
 import cic25.proyPareja002.grupo8.app.repository.ProductoRepository;
 
@@ -28,13 +27,8 @@ public class ProductoService {
         productoRepository.deleteById(Long.valueOf(id));
     }
 
-    public void update(Producto producto) throws SecureNoAllowNewID {
-        if (getById(producto.getId()) == null || getById(producto.getId()).getId() == 0) {
-            throw new SecureNoAllowNewID("no se pude actualizar un registro que no exsite");
-        }
-
+    public void update(Producto producto) {
         productoRepository.save(producto);
-
     }
 
     public Producto getById(Long id) {

@@ -29,8 +29,8 @@ public class ProductoController {
     @PostMapping()
     public Producto create(@RequestBody Producto producto) {
 
-        if (producto.getId() != null) {
-            throw new RuntimeException("hay que saltar una exepcion aqui pero antes crear una propia");
+        if (producto.getId() != null && producto.getId()!=0) {
+            throw new SecureNoAllowNewID("no se puede crear un producto con ID");
         }
         return productoService.create(producto);
     }
@@ -40,10 +40,12 @@ public class ProductoController {
         productoService.delete(Long.valueOf(id));
     }
 
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(SecureNoAllowNewID.class)
+
     @PutMapping()
-    public void update(@RequestBody Producto producto)  {
+    public void update(@RequestBody Producto producto) {
+        if (getById(producto.getId()) == null || getById(producto.getId()).getId() == 0) {
+            throw new SecureNoAllowNewID("no se pude actualizar un registro que no exsite");
+        }
         productoService.update(producto);
     }
 

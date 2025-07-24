@@ -26,159 +26,212 @@ import java.util.List;
 @AutoConfigureMockMvc
 public class ProductoControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
+        @Autowired
+        MockMvc mockMvc;
 
-    @Autowired
-    ObjectMapper objectMapper;
+        @Autowired
+        ObjectMapper objectMapper;
 
-    @Test
-    void testCreate() throws Exception {
-        Producto producto = new Producto();
-        producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
-        producto.setPrecio(2.2);
+        @Test
+        void testCreate() throws Exception {
+                Producto producto = new Producto();
+                producto.setNombre("Arroz");
+                producto.setMarca("Alguna Marca");
+                producto.setPrecio(2.2);
 
-        String ProductoJson = objectMapper.writeValueAsString(producto);
+                String ProductoJson = objectMapper.writeValueAsString(producto);
 
-        mockMvc.perform(post("/producto")
-                .contentType("application/json")
-                .content(ProductoJson))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(result -> {
-                    String JsonResultadoPost = result.getResponse().getContentAsString();
-                    Producto ProductoResultado = objectMapper.readValue(JsonResultadoPost, Producto.class);
-                    assertTrue(ProductoResultado.getId() > 0);
-                }).andDo(print());
+                mockMvc.perform(post("/producto")
+                                .contentType("application/json")
+                                .content(ProductoJson))
+                                .andExpect(status().isOk())
+                                .andDo(print())
+                                .andExpect(result -> {
+                                        String JsonResultadoPost = result.getResponse().getContentAsString();
+                                        Producto ProductoResultado = objectMapper.readValue(JsonResultadoPost,
+                                                        Producto.class);
+                                        assertTrue(ProductoResultado.getId() > 0);
+                                }).andDo(print());
 
-    }
+        }
 
-    @Test
-    void testDelete() throws Exception {
-        Producto producto = new Producto();
-        producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
-        producto.setPrecio(2.2);
+        @Test
+        void testCreateNoAllowWithID() throws Exception {
+                Producto producto = new Producto();
+                producto.setId(Long.valueOf(1));
+                producto.setNombre("Arroz");
+                producto.setMarca("Alguna Marca");
+                producto.setPrecio(2.2);
 
-        String ProductoJson = objectMapper.writeValueAsString(producto);
+                String ProductoJson = objectMapper.writeValueAsString(producto);
 
-        String JsonResultadoPost = mockMvc.perform(post("/producto")
-                .contentType("application/json")
-                .content(ProductoJson))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn().getResponse().getContentAsString();
+                mockMvc.perform(post("/producto")
+                                .contentType("application/json")
+                                .content(ProductoJson))
+                                .andExpect(status().is4xxClientError())
+                                .andDo(print());
 
-        Producto ProductoResultado = objectMapper.readValue(JsonResultadoPost, Producto.class);
+        }
 
-        mockMvc.perform(delete("/producto/" + ProductoResultado.getId()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn().getResponse().getContentAsString();
+        @Test
+        void testDelete() throws Exception {
+                Producto producto = new Producto();
+                producto.setNombre("Arroz");
+                producto.setMarca("Alguna Marca");
+                producto.setPrecio(2.2);
 
-        mockMvc.perform(get("/producto/" + ProductoResultado.getId()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(result -> {
-                    String JsonResultadoGet = result.getResponse().getContentAsString();
-                    assertTrue(JsonResultadoGet.isEmpty());
-                }).andDo(print());
+                String ProductoJson = objectMapper.writeValueAsString(producto);
 
-    }
+                String JsonResultadoPost = mockMvc.perform(post("/producto")
+                                .contentType("application/json")
+                                .content(ProductoJson))
+                                .andExpect(status().isOk())
+                                .andDo(print())
+                                .andReturn().getResponse().getContentAsString();
 
-    @Test
-    void testGetAll() throws Exception {
-        Producto producto = new Producto();
-        producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
-        producto.setPrecio(2.2);
+                Producto ProductoResultado = objectMapper.readValue(JsonResultadoPost, Producto.class);
 
-        String ProductoJson = objectMapper.writeValueAsString(producto);
+                mockMvc.perform(delete("/producto/" + ProductoResultado.getId()))
+                                .andExpect(status().isOk())
+                                .andDo(print())
+                                .andReturn().getResponse().getContentAsString();
 
-        mockMvc.perform(post("/producto")
-                .contentType("application/json")
-                .content(ProductoJson))
-                .andExpect(status().isOk())
-                .andDo(print());
+                mockMvc.perform(get("/producto/" + ProductoResultado.getId()))
+                                .andExpect(status().isOk())
+                                .andDo(print())
+                                .andExpect(result -> {
+                                        String JsonResultadoGet = result.getResponse().getContentAsString();
+                                        assertTrue(JsonResultadoGet.isEmpty());
+                                }).andDo(print());
 
-        mockMvc.perform(get("/producto"))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(result -> {
-                    String JsonResultadoGet = result.getResponse().getContentAsString();
-                    List<Producto> ResultadoGetAll = objectMapper.readValue(JsonResultadoGet,
-                            new TypeReference<List<Producto>>() {
-                            });
-                    assertTrue(!ResultadoGetAll.isEmpty());
-                    assertEquals(ResultadoGetAll.getFirst().getNombre(), producto.getNombre());
+        }
 
-                }).andDo(print());
-    }
+        @Test
+        void testGetAll() throws Exception {
+                Producto producto = new Producto();
+                producto.setNombre("Arroz");
+                producto.setMarca("Alguna Marca");
+                producto.setPrecio(2.2);
 
-    @Test
-    void testGetById() throws Exception {
+                String ProductoJson = objectMapper.writeValueAsString(producto);
 
-        Producto producto = new Producto();
-        producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
-        producto.setPrecio(2.2);
+                mockMvc.perform(post("/producto")
+                                .contentType("application/json")
+                                .content(ProductoJson))
+                                .andExpect(status().isOk())
+                                .andDo(print());
 
-        String ProductoJson = objectMapper.writeValueAsString(producto);
+                mockMvc.perform(get("/producto"))
+                                .andExpect(status().isOk())
+                                .andDo(print())
+                                .andExpect(result -> {
+                                        String JsonResultadoGet = result.getResponse().getContentAsString();
+                                        List<Producto> ResultadoGetAll = objectMapper.readValue(JsonResultadoGet,
+                                                        new TypeReference<List<Producto>>() {
+                                                        });
+                                        assertTrue(!ResultadoGetAll.isEmpty());
+                                        assertEquals(ResultadoGetAll.getFirst().getNombre(), producto.getNombre());
 
-        String JsonResultadoPost = mockMvc.perform(post("/producto")
-                .contentType("application/json")
-                .content(ProductoJson))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn().getResponse().getContentAsString();
+                                }).andDo(print());
+        }
 
-        Producto ProductoResultado = objectMapper.readValue(JsonResultadoPost, Producto.class);
+        @Test
+        void testGetById() throws Exception {
 
-        mockMvc.perform(get("/producto/" + ProductoResultado.getId()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(result -> {
-                    String JsonResultadoGet = result.getResponse().getContentAsString();
-                    Producto ProductoResultadoGet = objectMapper.readValue(JsonResultadoGet, Producto.class);
-                    assertEquals(ProductoResultadoGet.getNombre(), ProductoResultado.getNombre());
-                }).andDo(print());
+                Producto producto = new Producto();
+                producto.setNombre("Arroz");
+                producto.setMarca("Alguna Marca");
+                producto.setPrecio(2.2);
 
-    }
+                String ProductoJson = objectMapper.writeValueAsString(producto);
 
-    @Test
-    void testUpdate() throws Exception {
+                String JsonResultadoPost = mockMvc.perform(post("/producto")
+                                .contentType("application/json")
+                                .content(ProductoJson))
+                                .andExpect(status().isOk())
+                                .andDo(print())
+                                .andReturn().getResponse().getContentAsString();
 
-        Producto producto = new Producto();
-        producto.setNombre("Arroz");
-        producto.setMarca("Alguna Marca");
-        producto.setPrecio(2.2);
+                Producto ProductoResultado = objectMapper.readValue(JsonResultadoPost, Producto.class);
 
-        String ProductoJson = objectMapper.writeValueAsString(producto);
+                mockMvc.perform(get("/producto/" + ProductoResultado.getId()))
+                                .andExpect(status().isOk())
+                                .andDo(print())
+                                .andExpect(result -> {
+                                        String JsonResultadoGet = result.getResponse().getContentAsString();
+                                        Producto ProductoResultadoGet = objectMapper.readValue(JsonResultadoGet,
+                                                        Producto.class);
+                                        assertEquals(ProductoResultadoGet.getNombre(), ProductoResultado.getNombre());
+                                }).andDo(print());
 
-        String JsonResultadoPost = mockMvc.perform(post("/producto")
-                .contentType("application/json")
-                .content(ProductoJson))
-                .andExpect(status().isOk())
-                .andDo(print()).andReturn().getResponse().getContentAsString();
+        }
 
-        Producto productoActualizado = objectMapper.readValue(JsonResultadoPost, Producto.class);
-        String JSonProductoActualizado = objectMapper.writeValueAsString(productoActualizado);
+        @Test
+        void testUpdate() throws Exception {
 
-        mockMvc.perform(put("/producto")
-                .contentType("application/json")
-                .content(JSonProductoActualizado))
-                .andExpect(status().is4xxClientError())
-                .andDo(print());
+                Producto producto = new Producto();
+                producto.setNombre("Arroz");
+                producto.setMarca("Alguna Marca");
 
-        mockMvc.perform(get("/producto/" + productoActualizado.getId()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(result -> {
-                    String JsonResultadoGet = result.getResponse().getContentAsString();
-                    Producto ResultadoUpdate = objectMapper.readValue(JsonResultadoGet, Producto.class);
-                    assertEquals(ResultadoUpdate.getPrecio(), producto.getPrecio());
-                }).andDo(print());
+                String ProductoJson = objectMapper.writeValueAsString(producto);
 
-    }
+                String JsonResultadoPost = mockMvc.perform(post("/producto")
+                                .contentType("application/json")
+                                .content(ProductoJson))
+                                .andExpect(status().isOk())
+                                .andDo(print()).andReturn().getResponse().getContentAsString();
+
+                Producto productoActualizado = objectMapper.readValue(JsonResultadoPost, Producto.class);
+                productoActualizado.setPrecio(2.2);
+                String JSonProductoActualizado = objectMapper.writeValueAsString(productoActualizado);
+
+                mockMvc.perform(put("/producto")
+                                .contentType("application/json")
+                                .content(JSonProductoActualizado))
+                                .andExpect(status().isOk())
+                                .andDo(print());
+
+                mockMvc.perform(get("/producto/" + productoActualizado.getId()))
+                                .andExpect(status().isOk())
+                                .andDo(print())
+                                .andExpect(result -> {
+                                        String JsonResultadoGet = result.getResponse().getContentAsString();
+                                        Producto ResultadoUpdate = objectMapper.readValue(JsonResultadoGet,
+                                                        Producto.class);
+                                        assertEquals(ResultadoUpdate.getPrecio(), productoActualizado.getPrecio());
+                                }).andDo(print());
+
+        }
+
+        @Test
+        void testUpdateResgisterNotExists() throws Exception {
+
+                Producto producto = new Producto();
+                producto.setNombre("Arroz");
+                producto.setMarca("Alguna Marca");
+                producto.setPrecio(2.2);
+
+                String ProductoJson = objectMapper.writeValueAsString(producto);
+
+                String JsonResultadoPost = mockMvc.perform(post("/producto")
+                                .contentType("application/json")
+                                .content(ProductoJson))
+                                .andExpect(status().isOk())
+                                .andDo(print()).andReturn().getResponse().getContentAsString();
+
+                Producto productoActualizado = objectMapper.readValue(JsonResultadoPost, Producto.class);
+                String JSonProductoActualizado = objectMapper.writeValueAsString(productoActualizado);
+
+                mockMvc.perform(delete("/producto/" + productoActualizado.getId()))
+                                .andExpect(status().isOk())
+                                .andDo(print())
+                                .andReturn().getResponse().getContentAsString();
+
+                mockMvc.perform(put("/producto")
+                                .contentType("application/json")
+                                .content(JSonProductoActualizado))
+                                .andExpect(status().is4xxClientError())
+                                .andDo(print());
+
+        }
 }

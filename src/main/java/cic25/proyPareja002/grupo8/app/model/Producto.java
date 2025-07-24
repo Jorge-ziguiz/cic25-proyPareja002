@@ -10,13 +10,13 @@ public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String Nombre;
+    private String Nombre;
 
-    String Marca;
+    private String Marca;
 
-    double Precio;
+    private double Precio;
 
     public Long getId() {
         return id;
