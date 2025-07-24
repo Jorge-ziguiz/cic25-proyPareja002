@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cic25.proyPareja002.grupo8.app.exeptions.TiendaNoExistia;
 import cic25.proyPareja002.grupo8.app.exeptions.TiendaNulaException;
+import cic25.proyPareja002.grupo8.app.model.Administrador;
 import cic25.proyPareja002.grupo8.app.model.Tienda;
+import cic25.proyPareja002.grupo8.app.service.AdministradorService;
 import cic25.proyPareja002.grupo8.app.service.TiendaService;
 
 @RestController
@@ -23,6 +25,9 @@ import cic25.proyPareja002.grupo8.app.service.TiendaService;
 public class TiendaController {
     @Autowired
     TiendaService tiendaService;
+
+    @Autowired
+    AdministradorService administradorService;
 
     @GetMapping()
     public List<Tienda> getAll() {
@@ -37,6 +42,11 @@ public class TiendaController {
     @PostMapping()
     public Tienda post(@RequestBody Tienda tienda) {
         return tiendaService.post(tienda);
+    }
+
+    @PostMapping("/administrador")
+    public Administrador crearAdministrador(Administrador administrador){
+        return administradorService.create(administrador);
     }
 
     @DeleteMapping("{id}")
