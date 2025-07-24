@@ -22,6 +22,7 @@ public class ProductoService {
     private final static Logger LOGGER = LoggerFactory.getLogger(ProductoService.class);
 
     public Producto create(Producto producto) {
+        producto.setMarca(null);
         return productoRepository.save(producto);
     }
 
@@ -43,4 +44,9 @@ public class ProductoService {
         List<Producto> resultado = productoRepository.findAll();
         return resultado;
     }
+
+    // public Producto proverdorProducto(Producto producto) {
+    //     return productoRepository.save(producto);
+    // }
+
 }

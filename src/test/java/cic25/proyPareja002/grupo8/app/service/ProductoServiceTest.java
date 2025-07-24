@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import cic25.proyPareja002.grupo8.app.model.Producto;
 
 @SpringBootTest
@@ -80,7 +79,7 @@ public class ProductoServiceTest {
     }
 
     @Test
-    void testUpdate()  {
+    void testUpdate() {
 
         Producto producto = new Producto();
 

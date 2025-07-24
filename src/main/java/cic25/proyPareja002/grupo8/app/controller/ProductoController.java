@@ -29,7 +29,16 @@ public class ProductoController {
     @PostMapping()
     public Producto create(@RequestBody Producto producto) {
 
-        if (producto.getId() != null && producto.getId()!=0) {
+        if (producto.getId() != null && producto.getId() != 0) {
+            throw new SecureNoAllowNewID("no se puede crear un producto con ID");
+        }
+        producto.setMarca(null);
+        return productoService.create(producto);
+    }
+
+    @PostMapping("provedor")
+    public Producto productoProvedor(@RequestBody Producto producto) {
+        if (producto.getId() != null && producto.getId() != 0) {
             throw new SecureNoAllowNewID("no se puede crear un producto con ID");
         }
         return productoService.create(producto);
@@ -39,7 +48,6 @@ public class ProductoController {
     public void delete(@PathVariable long id) {
         productoService.delete(Long.valueOf(id));
     }
-
 
     @PutMapping()
     public void update(@RequestBody Producto producto) {

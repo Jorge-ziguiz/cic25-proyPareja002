@@ -36,14 +36,6 @@ public class Producto {
     public void setNombre(String nombre) {
         Nombre = nombre;
     }
-    
-    public Marca getMarca() {
-        return marca;
-    }
-
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-    }
 
     public double getPrecio() {
         return Precio;
@@ -53,16 +45,24 @@ public class Producto {
         Precio = precio;
     }
 
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((Nombre == null) ? 0 : Nombre.hashCode());
-        result = prime * result + ((marca == null) ? 0 : marca.hashCode());
         long temp;
         temp = Double.doubleToLongBits(Precio);
         result = prime * result + (int) (temp ^ (temp >>> 32));
+        result = prime * result + ((marca == null) ? 0 : marca.hashCode());
         return result;
     }
 
@@ -85,19 +85,19 @@ public class Producto {
                 return false;
         } else if (!Nombre.equals(other.Nombre))
             return false;
+        if (Double.doubleToLongBits(Precio) != Double.doubleToLongBits(other.Precio))
+            return false;
         if (marca == null) {
             if (other.marca != null)
                 return false;
         } else if (!marca.equals(other.marca))
-            return false;
-        if (Double.doubleToLongBits(Precio) != Double.doubleToLongBits(other.Precio))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Producto [id=" + id + ", Nombre=" + Nombre + ", Marca=" + marca + ", Precio=" + Precio + "]";
+        return "Producto [id=" + id + ", Nombre=" + Nombre + ", Precio=" + Precio + "]";
     }
 
 }

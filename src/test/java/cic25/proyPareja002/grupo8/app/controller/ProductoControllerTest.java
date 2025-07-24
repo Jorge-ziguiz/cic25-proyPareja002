@@ -36,7 +36,7 @@ public class ProductoControllerTest {
         void testCreate() throws Exception {
                 Producto producto = new Producto();
                 producto.setNombre("Arroz");
-                // Sproducto.setMarca("Alguna Marca");
+                // producto.setMarca("Alguna Marca");
                 producto.setPrecio(2.2);
 
                 String ProductoJson = objectMapper.writeValueAsString(producto);
