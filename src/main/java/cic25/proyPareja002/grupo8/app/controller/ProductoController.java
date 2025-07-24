@@ -40,7 +40,7 @@ public class ProductoController {
         return productoService.create(producto);
     }
 
-    @PostMapping("provedor")
+    @PostMapping("marca")
     public Producto productoProvedor(@RequestBody Producto producto) {
         if (producto.getId() != null && producto.getId() != 0) {
             throw new SecureNoAllowNewID("no se puede crear un producto con ID");

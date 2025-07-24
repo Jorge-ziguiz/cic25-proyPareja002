@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ProverdorDeProducto {
+public class MarcaProvedorDeProducto {
 
     @Autowired
     MockMvc mockMvc;
@@ -48,7 +48,7 @@ public class ProverdorDeProducto {
 
         String ProductoJson = objectMapper.writeValueAsString(producto);
 
-        mockMvc.perform(post("/producto/provedor")
+        mockMvc.perform(post("/producto/marca")
                 .contentType("application/json")
                 .content(ProductoJson))
                 .andExpect(status().isOk())

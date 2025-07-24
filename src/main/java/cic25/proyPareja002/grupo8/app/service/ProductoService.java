@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cic25.proyPareja002.grupo8.app.model.Marca;
 import cic25.proyPareja002.grupo8.app.model.Producto;
 import cic25.proyPareja002.grupo8.app.repository.ProductoRepository;
 
@@ -23,7 +24,6 @@ public class ProductoService {
 
     public Producto create(Producto producto) {
         LOGGER.info("creacion de un producto sin producto");
-        producto.setMarca(null);
         return productoRepository.save(producto);
     }
 
@@ -50,8 +50,15 @@ public class ProductoService {
         return resultado;
     }
 
-    // public Producto proverdorProducto(Producto producto) {
-    // return productoRepository.save(producto);
-    // }
+    private boolean hasMarca(Optional<Producto> producto){
+        boolean has;
+
+        if(producto.isPresent()){
+            has = producto.get().getMarca()!=null;
+        }else{
+            has = false;
+        }
+        return has;
+    }
 
 }
