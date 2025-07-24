@@ -32,16 +32,10 @@ public class MarcaController {
 
     @PostMapping()
     public Marca create(@RequestBody Marca Marca) {
-        try {
-            if (Marca.getId() != null && Marca.getId() != 0) {
-                throw new SecureNoAllowNewID("no se puede crear un Marca con ID");
-            }
-            return MarcaService.create(Marca);
-        } catch (SecureNoAllowNewID e) {
-            LOGGER.error("no se puede crear un Marca con ID", e);
-            return null;
+        if (Marca.getId() != null && Marca.getId() != 0) {
+            throw new SecureNoAllowNewID("no se puede crear un Marca con ID");
         }
-
+        return MarcaService.create(Marca);
     }
 
     @DeleteMapping("/{id}")
@@ -51,14 +45,11 @@ public class MarcaController {
 
     @PutMapping()
     public void update(@RequestBody Marca Marca) {
-        try {
-            if (getById(Marca.getId()) == null || getById(Marca.getId()).getId() == 0) {
-                throw new SecureNoAllowNewID("no se pude actualizar un registro que no exsite");
-            }
-            MarcaService.update(Marca);
-        } catch (SecureNoAllowNewID e) {
-            LOGGER.error("no se pude actualizar un registro que no exsite", e);
+
+        if (getById(Marca.getId()) == null || getById(Marca.getId()).getId() == 0) {
+            throw new SecureNoAllowNewID("no se pude actualizar un registro que no exsite");
         }
+        MarcaService.update(Marca);
 
     }
 

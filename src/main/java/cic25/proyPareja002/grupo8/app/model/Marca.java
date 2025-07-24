@@ -2,6 +2,7 @@ package cic25.proyPareja002.grupo8.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class Marca {
     private String LugarDeOrigen;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "marca")
+    @OneToOne(mappedBy = "marca",cascade = {})
     private Producto producto;
 
     public Long getId() {
