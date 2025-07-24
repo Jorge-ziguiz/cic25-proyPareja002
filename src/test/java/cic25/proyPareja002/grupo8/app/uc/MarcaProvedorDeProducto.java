@@ -137,7 +137,7 @@ public class MarcaProvedorDeProducto {
                                 .andExpect(result -> {
                                         String JsonResultadoGet = result.getResponse().getContentAsString();
                                         assertEquals(JsonResultadoGet, "");
-                                }).andDo(print());
+                                });
 
                 mockMvc.perform(get("/marca/" + ResultadoProducto.getMarca().getId()))
                                 .andExpect(status().isOk())
@@ -145,8 +145,10 @@ public class MarcaProvedorDeProducto {
                                 .andExpect(result -> {
                                         String JsonResultadoGet = result.getResponse().getContentAsString();
                                         Marca marcaSinProducto = objectMapper.readValue(JsonResultadoGet, Marca.class);
-
-                                        assertEquals(marcaSinProducto,MarcasAsosciadoAProdcuto);
-                                }).andDo(print());
+                                        
+                                        assertTrue(marcaSinProducto.getProducto() == null);
+                                        assertEquals(marcaSinProducto.getId(), MarcasAsosciadoAProdcuto.getId());
+                                        
+                                });
         }
 }
