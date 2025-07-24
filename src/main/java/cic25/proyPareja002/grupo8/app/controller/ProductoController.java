@@ -2,6 +2,8 @@ package cic25.proyPareja002.grupo8.app.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,22 +28,37 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
+
     @PostMapping()
     public Producto create(@RequestBody Producto producto) {
+        try {
+            if (producto.getId() != null && producto.getId() != 0) {
 
-        if (producto.getId() != null && producto.getId() != 0) {
-            throw new SecureNoAllowNewID("no se puede crear un producto con ID");
+                throw new SecureNoAllowNewID("no se puede crear un producto con ID");
+            }
+            producto.setMarca(null);
+            return productoService.create(producto);
+
+        } catch (SecureNoAllowNewID e) {
+            LOGGER.error("no se puede crear un producto con ID", e);
+            return null;
         }
-        producto.setMarca(null);
-        return productoService.create(producto);
+
     }
 
     @PostMapping("provedor")
     public Producto productoProvedor(@RequestBody Producto producto) {
-        if (producto.getId() != null && producto.getId() != 0) {
-            throw new SecureNoAllowNewID("no se puede crear un producto con ID");
+        try {
+            if (producto.getId() != null && producto.getId() != 0) {
+                throw new SecureNoAllowNewID("no se puede crear un producto con ID");
+            }
+            return productoService.create(producto);
+        } catch (SecureNoAllowNewID e) {
+            LOGGER.error("no se puede crear un producto con ID", e);
+            return null;
         }
-        return productoService.create(producto);
+
     }
 
     @DeleteMapping("/{id}")

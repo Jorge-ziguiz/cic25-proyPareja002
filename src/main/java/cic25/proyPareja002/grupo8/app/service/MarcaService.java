@@ -22,23 +22,28 @@ public class MarcaService {
     private final static Logger LOGGER = LoggerFactory.getLogger(MarcaService.class);
 
     public Marca create(Marca Marca) {
+        LOGGER.info("creacion del marca");
         return marcaRepository.save(Marca);
     }
 
     public void delete(Long id) {
+        LOGGER.info("eliminado un registro de marca");
         marcaRepository.deleteById(Long.valueOf(id));
     }
 
     public void update(Marca Marca) {
+        LOGGER.info("actualizando un registro de marca");
         marcaRepository.save(Marca);
     }
 
     public Marca getById(Long id) {
+        LOGGER.info("obteniendo un registro de marca por id");
         Optional<Marca> resultado = marcaRepository.findById(id);
         return resultado.orElse(null);
     }
 
     public List<Marca> getByAll() {
+        LOGGER.info("obteniendo todos registros de marca");
         List<Marca> resultado = marcaRepository.findAll();
         return resultado;
     }

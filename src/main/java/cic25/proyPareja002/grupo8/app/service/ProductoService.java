@@ -22,31 +22,36 @@ public class ProductoService {
     private final static Logger LOGGER = LoggerFactory.getLogger(ProductoService.class);
 
     public Producto create(Producto producto) {
+        LOGGER.info("creacion de un producto sin producto");
         producto.setMarca(null);
         return productoRepository.save(producto);
     }
 
     public void delete(Long id) {
+        LOGGER.info("eliminacion de un registro de producto");
         productoRepository.deleteById(Long.valueOf(id));
     }
 
     public void update(Producto producto) {
+        LOGGER.info("actualizacion de un producto");
         productoRepository.save(producto);
     }
 
     @Transactional(readOnly = true)
     public Producto getById(Long id) {
+        LOGGER.info("obtener un registro de producto");
         Optional<Producto> resultado = productoRepository.findById(id);
         return resultado.orElse(null);
     }
 
     public List<Producto> getByAll() {
+        LOGGER.info("obtener todos registros de producto");
         List<Producto> resultado = productoRepository.findAll();
         return resultado;
     }
 
     // public Producto proverdorProducto(Producto producto) {
-    //     return productoRepository.save(producto);
+    // return productoRepository.save(producto);
     // }
 
 }
