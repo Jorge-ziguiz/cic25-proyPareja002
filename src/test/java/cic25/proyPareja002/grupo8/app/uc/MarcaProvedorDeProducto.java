@@ -145,10 +145,10 @@ public class MarcaProvedorDeProducto {
                                 .andExpect(result -> {
                                         String JsonResultadoGet = result.getResponse().getContentAsString();
                                         Marca marcaSinProducto = objectMapper.readValue(JsonResultadoGet, Marca.class);
-                                        
+
                                         assertTrue(marcaSinProducto.getProducto() == null);
                                         assertEquals(marcaSinProducto.getId(), MarcasAsosciadoAProdcuto.getId());
-                                        
+
                                 });
         }
 }
