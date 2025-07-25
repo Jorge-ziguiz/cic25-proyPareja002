@@ -61,7 +61,5 @@ public class AdministracionDeTienda {
                             result.getResponse().getContentAsString(), Tienda.class);
                     assertNotNull(tiendaResultado, "El administrador debe ser devuelto");
                 });
-
     }
-
 }

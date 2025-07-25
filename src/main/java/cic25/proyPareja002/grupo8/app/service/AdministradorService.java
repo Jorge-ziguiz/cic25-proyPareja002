@@ -26,15 +26,18 @@ public class AdministradorService {
     }
 
     public Optional<Administrador> get(Long id) {
+        LOGGER.info(String.format("Obteniendo un administrador con el id %d", id));
         return administradorRepository.findById(id);
     }
 
     public Administrador create(Administrador administrador) {
+        LOGGER.info(String.format("Creando un administrador"));
         return administradorRepository.save(administrador);
     }
 
     public Administrador update(Long id, Administrador administradorActualizado) {
         if (administradorRepository.findById(id).isEmpty()) {
+            LOGGER.error(String.format("Error por intentar actualizar el administrador con el id %d", id));
             throw new AdministradorNoExistente("No se puede actualizar un administrador que no existía previamente");
         }
         administradorActualizado.setId(id);
@@ -42,6 +45,7 @@ public class AdministradorService {
     }
 
     public void delete(Long id) {
+        LOGGER.info("Eliminando el administrador con id %d", id);
         administradorRepository.deleteById(id);
     }
 }

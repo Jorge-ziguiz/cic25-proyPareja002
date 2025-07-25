@@ -49,6 +49,7 @@ public class TiendaService {
 
     public Tienda update(Long id, Tienda tienda) throws TiendaNoExistia{
         if(tiendaRepository.findById(id).isEmpty()){
+            LOGGER.error(String.format("Error al actualizar: no se puede actualizar una tienda que no existía previamente"));
             throw new TiendaNoExistia();
         }
 
