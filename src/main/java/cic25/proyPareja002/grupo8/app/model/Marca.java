@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Version;
 
 @Entity
 public class Marca {
@@ -17,6 +18,9 @@ public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
+    @Version
+    private Long version;
 
     @Column(nullable = false, unique = true)
     private String NombreComercial;
@@ -58,6 +62,16 @@ public class Marca {
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
+
+    
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
 
     @Override
     public int hashCode() {

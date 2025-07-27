@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Version;
 
 @Entity
 public class Producto {
@@ -16,12 +17,16 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    private Long version;
+
     @Column(nullable = false)
     private String Nombre;
 
     private double Precio;
 
-    @OneToOne(orphanRemoval = true,cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @OneToOne(orphanRemoval = true, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH }, fetch = FetchType.EAGER)
     private Marca marca;
 
     public Long getId() {
@@ -54,6 +59,14 @@ public class Producto {
 
     public void setMarca(Marca marca) {
         this.marca = marca;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     @Override
