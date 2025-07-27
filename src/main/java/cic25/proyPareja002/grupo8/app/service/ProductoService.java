@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cic25.proyPareja002.grupo8.app.model.Marca;
 import cic25.proyPareja002.grupo8.app.model.Producto;
 import cic25.proyPareja002.grupo8.app.repository.ProductoRepository;
 
@@ -23,7 +22,7 @@ public class ProductoService {
     private final static Logger LOGGER = LoggerFactory.getLogger(ProductoService.class);
 
     public Producto create(Producto producto) {
-        LOGGER.info("creacion de un producto sin producto");
+        LOGGER.info("creacion de un producto");
         return productoRepository.save(producto);
     }
 

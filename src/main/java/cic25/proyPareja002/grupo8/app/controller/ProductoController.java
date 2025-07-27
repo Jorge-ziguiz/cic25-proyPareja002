@@ -45,6 +45,7 @@ public class ProductoController {
         if (producto.getId() != null && producto.getId() != 0) {
             throw new SecureNoAllowNewID("no se puede crear un producto con ID");
         }
+        
         return productoService.create(producto);
     }
 
