@@ -28,6 +28,8 @@ public class ProductoService {
 
     public void delete(Long id) {
         LOGGER.info("eliminacion de un registro de producto");
+        Producto producto = getById(Long.valueOf(id));
+        producto.getMarca().setProducto(null);
         productoRepository.deleteById(Long.valueOf(id));
     }
 

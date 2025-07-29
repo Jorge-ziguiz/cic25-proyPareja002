@@ -28,7 +28,7 @@ public class Marca {
     private String LugarDeOrigen;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "marca", cascade = { CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "marca", cascade = { CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
     private Producto producto;
 
     public Long getId() {

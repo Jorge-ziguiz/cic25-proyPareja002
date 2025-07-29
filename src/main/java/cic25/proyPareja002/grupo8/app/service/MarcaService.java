@@ -1,6 +1,5 @@
 package cic25.proyPareja002.grupo8.app.service;
 
-
 import java.util.Optional;
 import java.util.List;
 import org.slf4j.Logger;
@@ -30,6 +29,7 @@ public class MarcaService {
         LOGGER.info("eliminado un registro de marca");
         marcaRepository.deleteById(Long.valueOf(id));
     }
+
 
     public void update(Marca Marca) {
         LOGGER.info("actualizando un registro de marca");

@@ -25,8 +25,8 @@ public class Producto {
 
     private double Precio;
 
-    @OneToOne(orphanRemoval = true, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH }, fetch = FetchType.EAGER)
+    @OneToOne(orphanRemoval = false, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH }, fetch = FetchType.EAGER )  
     private Marca marca;
 
     public Long getId() {

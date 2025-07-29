@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cic25.proyPareja002.grupo8.app.model.Marca;
@@ -19,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -47,18 +50,25 @@ public class MarcaProvedorDeProducto {
 
                 String ProductoJson = objectMapper.writeValueAsString(producto);
 
-                mockMvc.perform(post("/producto/marca")
+                Marca marcaInDDBB;
+                if ((marcaInDDBB = getMarcaIfExists(marca)) != null) {
+                        mockMvc.perform(delete("/marca/" + marcaInDDBB.getId()))
+                                        .andExpect(status().isOk())
+                                        .andDo(print());
+                }
+
+                String JsonResultadoPost = mockMvc.perform(post("/producto/marca")
                                 .contentType("application/json")
                                 .content(ProductoJson))
                                 .andExpect(status().isOk())
                                 .andDo(print())
-                                .andExpect(result -> {
-                                        String JsonResultadoPost = result.getResponse().getContentAsString();
-                                        Producto ProductoResultado = objectMapper.readValue(JsonResultadoPost,
-                                                        Producto.class);
-                                        assertTrue(ProductoResultado.getId() > 0);
-                                        assertEquals(producto.getMarca().getLugarDeOrigen(), "España");
-                                }).andDo(print());
+                                .andReturn().getResponse().getContentAsString();
+
+                Producto ProductoResultado = objectMapper.readValue(JsonResultadoPost,
+                                Producto.class);
+                assertTrue(ProductoResultado.getId() > 0);
+                assertEquals(producto.getMarca().getLugarDeOrigen(), "España");
+
         }
 
         @Test
@@ -82,7 +92,8 @@ public class MarcaProvedorDeProducto {
                                 .andReturn().getResponse().getContentAsString();
 
                 Producto ResultadoProducto = objectMapper.readValue(JsonProductoResultadoPost, Producto.class);
-                ResultadoProducto.getMarca().setLugarDeOrigen("Portugal");;
+                ResultadoProducto.getMarca().setLugarDeOrigen("Portugal");
+                ;
 
                 String ProductoMarcaActualizada = objectMapper.writeValueAsString(ResultadoProducto);
 
@@ -102,6 +113,7 @@ public class MarcaProvedorDeProducto {
                 Marca marcaActualiazado = objectMapper.readValue(jsonresultadoget, Producto.class).getMarca();
 
                 assertEquals(marcaActualiazado.getLugarDeOrigen(), "Portugal");
+
         }
 
         @Test
@@ -116,22 +128,25 @@ public class MarcaProvedorDeProducto {
                 producto.setMarca(marca);
                 producto.setPrecio(2.2);
 
-
-
                 String ProductoJson = objectMapper.writeValueAsString(producto);
+
+                Marca marcaInDDBB;
+                if ((marcaInDDBB = getMarcaIfExists(marca)) != null) {
+                        mockMvc.perform(delete("/marca/" + marcaInDDBB.getId()))
+                                        .andExpect(status().isOk())
+                                        .andDo(print());
+
+                }
 
                 String JsonResultadoPost = mockMvc.perform(post("/producto/marca")
                                 .contentType("application/json")
                                 .content(ProductoJson))
                                 .andExpect(status().isOk())
-                                .andDo(print())         
+                                .andDo(print())
                                 .andReturn().getResponse().getContentAsString();
 
                 Producto ResultadoProducto = objectMapper.readValue(JsonResultadoPost, Producto.class);
                 Marca MarcasAsosciadoAProdcuto = ResultadoProducto.getMarca();
-
-                MarcasAsosciadoAProdcuto.setProducto(null);
-
 
                 mockMvc.perform(delete("/producto/" + ResultadoProducto.getId()))
                                 .andExpect(status().isOk())
@@ -151,11 +166,34 @@ public class MarcaProvedorDeProducto {
                                 .andExpect(result -> {
                                         String JsonResultadoGet = result.getResponse().getContentAsString();
                                         JsonResultadoGet.toString();
-                                        // Marca marcaSinProducto = objectMapper.readValue(JsonResultadoGet, Marca.class);
+                                        Marca marcaSinProducto = objectMapper.readValue(JsonResultadoGet, Marca.class);
 
-                                        // assertTrue(marcaSinProducto.getProducto() == null);
-                                        // assertEquals(marcaSinProducto.getId(), MarcasAsosciadoAProdcuto.getId());
+                                        assertTrue(marcaSinProducto.getProducto() == null);
+                                        assertEquals(marcaSinProducto.getId(), MarcasAsosciadoAProdcuto.getId());
 
                                 });
+
         }
+
+        private Marca getMarcaIfExists(Marca buscar) throws Exception {
+
+                String resutado = mockMvc.perform(get("/marca"))
+                                .andExpect(status().isOk())
+                                .andDo(print())
+                                .andReturn().getResponse().getContentAsString();
+
+                List<Marca> marcas = objectMapper.readValue(resutado, new TypeReference<List<Marca>>() {
+                });
+
+                Marca retorno = null;
+                for (Marca m : marcas) {
+                        if (buscar.getNombreComercial().equals(m.getNombreComercial())) {
+                                retorno = m;
+                        }
+                }
+
+                return retorno;
+
+        }
+
 }
