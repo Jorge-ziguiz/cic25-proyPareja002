@@ -60,7 +60,6 @@ public class AdministradorControllerIntegrationTest {
                             .findById(adminCreado.getId());
                     assertTrue(adminRealmenteCreado.isPresent());
                 });
-
     }
 
     @Test
@@ -88,7 +87,6 @@ public class AdministradorControllerIntegrationTest {
         administrador.setUsuario("user001");
 
         administrador = administradorRepository.save(administrador);
-        // String adminJson = objectMapper.writeValueAsString(administrador);
 
         mockMvc.perform(get("/administrador/" + administrador.getId())
                 .contentType("application/json"))
@@ -138,6 +136,7 @@ public class AdministradorControllerIntegrationTest {
         // administrador = administradorRepository.save(administrador);
 
         String adminJson = objectMapper.writeValueAsString(administrador);
+        
         MvcResult mvcResult = mockMvc.perform(post("/administrador")
                 .contentType("application/json")
                 .content(adminJson))
@@ -155,12 +154,12 @@ public class AdministradorControllerIntegrationTest {
         mockMvc.perform(put("/administrador/" + id)
                 .contentType("application/json")
                 .content(adminJson))
-                // .andExpect(status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(result -> {
                     String json = result.getResponse().getContentAsString();
                     Administrador adminActualizado = objectMapper.readValue(json, Administrador.class);
                     assertEquals("nombre cambiado", adminActualizado.getNombre());
                 });
-
     }
+
 }
