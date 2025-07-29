@@ -52,9 +52,7 @@ public class TiendaService {
             LOGGER.error(String.format("Error al actualizar: no se puede actualizar una tienda que no existía previamente"));
             throw new TiendaNoExistia();
         }
-
         tienda.setId(id);
-
         return tiendaRepository.save(tienda);
     }
 }
